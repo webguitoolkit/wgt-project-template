@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+   <properties>
+   </properties>
+<!-- 
+The following attributes are supported for the <release> element:
+
+version			Required	Name of the version in which the changes occur. For each change, add a nested <action> element as described below.
+date			Required	Date at which the version was released. You can use a free form comment such as "in SVN" for unreleased versions.
+description		Optional	An optional description of the release. This is used in the overview table of releases. Note: In releases prior to 2.0-beta-2 this was called desc. It was changed to improve compatibility with the Maven 1 changes plugin.
+
+The following attributes are supported for the <action> element:
+
+dev				Required	Name of developer who committed the change. This must be the name of the developer as described in the developers section of the pom.xml file.
+type			Required	Type of change. There are four valid values: add, fix, remove, update.
+issue			Optional	Id of the issue related to this change. This is the id in your issue tracking system.
+							The Changes plugin will generate a URL out of this id. The URL is constructed using the value of the issueLinkTemplate parameter. See the changes-report mojo for more details.
+due-to			Optional	Name of the person to be credited for this change. This can be used when a patch is submitted by a non-committer.
+due-to-email	Optional	Email of the person to be credited for this change.
+ -->
+   <body>
+      <release version="02.01.06" date="2012-01-11" description="Maintenance release">
+          <action dev="kaiserw" type="update" date="2012-01-24">
+          Updated WebDAV wagon transport extension.
+          </action>
+          <action dev="kaiserw" type="update" date="2012-01-20">
+          Updated Plexus Eclipse and Javac compiler for Maven Compiler and EAR plugin.
+          </action>
+          <action dev="kaiserw" type="add" date="2012-01-17">
+          Added configuration properties for compile/testCompile includes.
+          </action>
+          <action dev="kaiserw" type="update" date="2012-01-17">
+          Use Nexus as Maven artefact repository (test installation).
+          </action>
+          <action dev="kaiserw" type="update" date="2012-01-11">
+          Added runtime configuration properties for Sonar which can be overriden by derived POMs.
+          </action>
+          <action dev="kaiserw" type="update" date="2012-01-10">
+          Updated release plugin.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-12-06">
+          Updated commons-lang4 and commons-digester dependencies.
+          </action>
+          <action dev="kaiserw" type="remove" date="2011-12-06">
+          Removed version plugin execution in standard build lifecycle as this plugin can only be executed by direct invocation.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-12-06">
+          Updated surefire and dependency plugins.
+          </action>
+          <action dev="kaiserw" type="fix" date="2011-11-25">
+          Configure Versions plugin in plugins-section to avoid failed Maven releases. Removed versions:use-releases in release:prepare goal list.
+          </action>
+          <action dev="kaiserw" type="add" date="2011-11-23">
+          Added configuration for m2e plugin which is invoked during the Eclipse build process and configures the Maven plugin execution in a lifecycle mapping.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-11-15">
+          Updated PMD and Selenium plugins.
+          </action>
+          <action dev="kaiserw" type="add" date="2011-11-15">
+          Specify classesDirectory for Surefire JUnit tests and make it configurable.
+          </action>
+          <action dev="kaiserw" type="add" date="2011-11-15">
+          Additional config parameters for easier overriding of directory settings.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-10-24">
+          Make version of Sonar plugin configurable.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-10-24">
+          Added property 'aspectDirectory' to make the directory configurable in which the Aspects can be found.
+          </action>
+      </release>
+      <release version="02.01.05" date="2011-09-08" description="Sonar support and AspectJ adjustments">
+          <action dev="kaiserw" type="update" date="2011-10-13">
+          Updated Apache IO library.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-10-07">
+          Updated Sonar to match server version - use DerbyDB as Sonar backend.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-09-08">
+          Updated Apache configurations library.
+          </action>
+          <action dev="kaiserw" type="add" date="2011-09-08">
+          Made AspectJ plugin easier configurable due to new build properties.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-09-08">
+          Changed property 'testAspectDirectory' to avoid duplicate class error messages due to added directory for testCompile.
+          </action>
+      </release>
+      <release version="02.01.04" date="2011-08-30" description="update release">
+          <action dev="kaiserw" type="update" date="2011-08-31">
+          Updated Maven plugins for AspectJ.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-08-30">
+          Updated Maven plugins for deploy, jar and checkstyle.
+          </action>
+      </release>
+      <release version="02.01.03" date="2011-08-08" description="update release">
+          <action dev="kaiserw" type="add" date="2011-08-10">
+          Added Apache commons-httpcomponents to replace commons-httpclient sometime in the future.
+          </action>
+          <action dev="kaiserw" type="add" date="2011-08-08">
+          Added Apache commons-lang3 and commons-digester3 dependencies which have an own groupId and can be used alongside the older versions of the library.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-08-08">
+          Updated Cobertura and Selenium Maven plugins.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-08-08">
+          Updated Maven plugins for release generation - prevent SNAPSHOT-suffix when creating a release tag.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-08-08">
+          Updated Maven plugins for site generation - new version should support now Maven2 and Maven3.
+          </action>
+      </release>
+      <release version="02.01.02" date="2011-04-12" description="update release">
+          <action dev="kaiserw" type="update" date="2011-07-12">
+          Updated Maven plugins (ear, changes, project-info, surefire, release, site).
+          </action>
+          <action dev="kaiserw" type="fix" date="2011-06-17">
+          Use new syntax for system properties when running Surefire tests (use ${env.CATALINA_HOME} instead of ${catalina.home}).
+          </action>
+          <action dev="kaiserw" type="update" date="2011-06-03">
+          Updated Apache commons libraries.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-04-17">
+          Updated Javadoc, buildnumber, project-info and deploy plugins.
+          </action>
+          <action dev="kaiserw" type="add" date="2011-05-10">
+          Add more information to MANIFEST.MF for jar and war files, and make it easier customizable.
+          </action>
+      </release>
+      <release version="02.01.01" date="2011-04-12" description="update release">
+          <action dev="kaiserw" type="update" date="2011-04-12">
+          Exclude AspectJ classes as they cause problems with Cobertura instrumentation (as of AspectJ 1.6.10 Cobertura 1.9.4).
+          </action>
+          <action dev="kaiserw" type="update" date="2011-04-12">
+          Use mail database as recipient for release information mails.
+          </action>
+          <action dev="kaiserw" type="fix" date="2011-04-11">
+          Moved configuration for changes plugin to reporting section. Derived POMs do not have to duplicate the configuration in the build section anymore due to plugin configuration with properties.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-03-24">
+          Updated Maven surefire plugin. 
+          </action>
+          <action dev="kaiserw" type="update" date="2011-03-03">
+          Updated some Maven plugin. 
+          </action>
+          <action dev="kaiserw" type="updated" date="2011-03-03">
+          Updated dependencies for Hibernate plugin. 
+          </action>
+          <action dev="kaiserw" type="add" date="2011-02-23">
+          Define same version number for AspectJ in dependency management (aspectjrt) and in AspectJ-plugin (aspectjtools) configuration. 
+          </action>
+          <action dev="kaiserw" type="update" date="2011-02-16">
+          Updated AspectJ from version 1.6.8 to version 1.6.10. 
+          </action>
+          <action dev="kaiserw" type="update" date="2011-02-16">
+          Updated Quartz from version 1.6.6 to version 1.8.4. 
+          </action>
+          <action dev="kaiserw" type="remove" date="2011-02-01">
+          Clean-up of process POM to avoid duplicate process configuration inherited from parent POM - still, the process POM and parent POM responsibilities should be reviewed. In the long term the process POM should be used as parent POM for project process definitions
+          </action>
+          <action dev="kaiserw" type="updated" date="2011-02-01">
+          Updated EAR and changes plugins.
+          </action>
+          <action dev="kaiserw" type="remove" date="2011-02-01">
+          Removed jsp API jar dependency due to deployment problems in Eclipse.
+          </action>
+          <action dev="kaiserw" type="update" date="2011-01-12">
+          Updated surefire and surefire-report plugins.
+          </action>
+      </release>
+      <release version="02.01.00" date="2010-08-30" description="Separation of build process and dependencies">
+          <action dev="kaiserw" type="update" date="2010-11-16">
+          Updated some Apache commons libraries and Derby libraries.
+          </action>
+          <action dev="kaiserw" type="add" date="2010-11-16">
+          Define system property TCLOGDIR for surefire test plugin so that application can use their default log4j configuration containing the ${TCLOGDIR} environment variable placeholder.
+          </action>
+          <action dev="kaiserw" type="update" date="2010-11-03">
+          Updated release plugin version to 2.1.
+          </action>
+          <action dev="kaiserw" type="fix" date="2010-10-05">
+          Use surefire forkMode=once to allow Cobertura flashing its collected data during VM shutdown (fixes 0% code coverage for Cobertura with surefire).
+          </action>
+          <action dev="kaiserw" type="add" date="2010-08-31">
+          Split Über-POM in parent pom for build process definitions and dependency pom for library dependency management.
+          </action>
+          <action dev="kaiserw" type="add" date="2010-08-30">
+          Added profiles reports-basic, reports-extended and reports-experimental with pre-configured reports.
+          </action>
+          <action dev="kaiserw" type="update" date="2010-08-30">
+          Updated several Maven plugin versions (minor version updates). 
+          </action>
+          <action dev="kaiserw" type="update" date="2010-08-30">
+          Automatically update SNAPSHOT dependencies to their released version during the release process.
+          </action>
+      </release>
+      <release version="02.00.12" date="2010-07-14" description="Maintenance release">
+          <action dev="kaiserw" type="update" date="2010-07-13">
+          Added version numbers to all Maven plugins. 
+          </action>
+      </release>
+      <release version="02.00.11" date="2010-06-14" description="Maintenance release">
+          <action dev="kaiserw" type="update" date="2010-06-23">
+          Updated several Maven plugin versions (minor version updates). 
+          </action>
+          <action dev="kaiserw" type="update" date="2010-06-14">
+          Updated commons-beanutils to version 1.8.3 which includes a important bug-fix for avoid return an empty string for each null bean value.
+          </action>
+          <action dev="kaiserw" type="update" date="2010-06-14">
+          Added Geronimo Servlet API dependency with default "provided" to prevent jar inclusion in projects.
+          </action>
+      </release>
+      <release version="02.00.10" date="2010-03-26" description="Maintenance release">
+          <action dev="kaiserw" type="added" date="2010-05-11">
+          Added special profile for multi-module aggregator builds which limit some build operations to the root module.
+          </action>
+          <action dev="kaiserw" type="update" date="2010-05-10">
+          Updated many Maven plugin versions. 
+          </action>
+          <action dev="kaiserw" type="update" date="2010-05-03">
+          Configure Cobertura for web application test (Profile "web-testcoverage"). 
+          </action>
+          <action dev="kaiserw" type="update" date="2010-03-26">
+          Changed scope for Geronimo Javamail and Activation dependencies to default "provided" because Eclipse plugin still deploys dependencies with scope "runtime" to the WebInf/lib container. 
+          </action>
+          <action dev="kaiserw" type="update" date="2010-03-26">
+          Updated Quartz from version 1.6.4 to version 1.6.6. 
+          </action>
+      </release>
+      <release version="02.00.09" date="2010-02-24" description="Maintenance release">
+          <action dev="kaiserw" type="update" date="2010-03-15">
+          Updated AspectJ from version 1.6.6 to version 1.6.8. 
+          </action>
+          <action dev="kaiserw" type="add" date="2010-03-12">
+          Added Geronimo Javamail and Activation dependencies with default "runtime" to prevent jar inclusion in projects. 
+          </action>
+          <action dev="kaiserw" type="update" date="2010-03-12">
+          Updated Apache commons-lang, commons-email, commons-exec, commons-pool, commons-dbcp, commons-io. 
+          </action>
+          <action dev="kaiserw" type="update" date="2010-03-02">
+          Added a Maven profile which allows integration tests with webapp deployment into a Tomcat server and GUI tests using Selenium RC. 
+          </action>
+          <action dev="kaiserw" type="update" date="2010-02-24">
+          Update release-plugin to version 2.0 (final). Hopefully, this make the release process more reliable. 
+          </action>
+      </release>
+      <release version="02.00.08" date="2010-02-08" description="Maintenance release">
+          <action dev="kaiserw" type="fix" date="2010-02-08">
+          Added "install" goal in mave-release-prepare step so multi module projects can use the parent POMs generated
+          during the prepare phase in their perform phase. 
+          </action>
+      </release>
+      <release version="02.00.07" date="2009-11-23" description="Maintenance release">
+          <action dev="kaiserw" type="fix" date="2010-01-27">
+          Marked test dependencies as optional. 
+          </action>
+          <action dev="kaiserw" type="fix" date="2010-91-27">
+          Removed outdated and indirectly referenced dependency to Apache POI/POI. 
+          </action>
+          <action dev="kaiserw" type="update" date="2009-12-07">
+          Updated source and compiled class version to JDK 1.5. 
+          </action>
+          <action dev="kaiserw" type="update" date="2009-11-24">
+          Improved compatibility with JUnit3 test classes which sometime have help classes starting with "Test" as class name. These classes would
+          be considered otherwise as tests by JUnit4. 
+          </action>
+          <action dev="kaiserw" type="update">
+          Updated the libraries to the following versions: aspectjrt-1.6.6 (from 1.6.5), commons-codec-1.4 (from 1.3), commons-pool-1.5.3 (from 1.5.2),
+          derby/derbynet/derbyclient-10.5.3.0_1 (from 10.4.2.0), dbunit-2.2. (from 2.1), jdom-1.1 (from 1.0), xercesImpl-2.9.1 (from 2.8.1), junit-(4.7) from (3.8.2) 
+          </action>
+          <action dev="kaiserw" type="add">
+          Introduced "prop.test.forkMode" to make forkMode for JUnit tests configurable.
+          </action>
+      </release>
+      <release version="02.00.06" date="2009-10-14" description="Maintenance release">
+          <action dev="hermannm" type="remove">
+          Removed unused XDoclet plugin configuration which caused error messages in Eclipse.
+          </action>
+          <action dev="kaiserw" type="add">
+          Added configuration parameter prop.javadoc.skip to enable/disable generating Javadoc. The default is to skip
+          the Javadoc generation. Projects which used already the prop.javadoc.attach-javadoc must now set this configuration
+          parameter as well.
+          </action>
+      </release>
+      <release version="02.00.05" date="2009-07-26" description="Maintenance release">
+          <action dev="kaiserw" type="update">
+          Updated Apache commons libraries: commons-lang, commons-pool.
+          </action>
+          <action dev="kaiserw" type="update">
+          Updated AspectJ runtime library to version 1.6.5.
+          </action>
+          <action dev="kaiserw" type="update">
+          Changed Waggon WebDAV transport extension to different/newer artifact wagon-webdav-jackrabbit. This might help to prevent failure do to PUT requests.
+          </action>
+      </release>
+      <release version="02.00.04" date="2009-06-26" description="Maintenance release">
+          <action dev="kaiserw" type="add">
+          Add comment of how to specify announcement mail recipients in the changes-plugin.
+          </action>
+          <action dev="kaiserw" type="fix">
+          Use full-qualified server names for isw600.
+          </action>
+          <action dev="kaiserw" type="update">
+          Prevent build failures during project clean while releasing a project.
+          </action>
+      </release>       
+      <release version="02.00.03" date="2009-03-26" description="Maintenance release">
+          <action dev="hermannm" type="update">
+          Updated URLs for changes plugin (Site URL and download URL). 
+          </action>
+          <action dev="kaiserw" type="update">
+          Updated Quartz libraries to version 1.6.4.
+          </action>
+          <action dev="kaiserw" type="update">
+          Updated Apache commons libraries: digester, commons-net, commons-beanutils.
+          </action>
+          <action dev="kaiserw" type="update">
+          Updated Derby libraries to version 10.4.2.0.
+          </action>
+          <action dev="kaiserw" type="add">
+          Add configuration for Hibernate3-Maven plugin in pluginManagement section (which specifies optional plugins for derived POMs).
+          </action>
+          <action dev="kaiserw" type="update">
+          Removed fixed version information for Maven plugins - now always try to use latest version available.
+          </action>
+          <action dev="kaiserw" type="add">
+          Make clean optional/configurable so projects with several submodules can choose to perform only one clean operation for all submodules.
+          </action>
+          <action dev="kaiserw" type="fix">
+          Updated sapjco dependency and added scope "provided" because this library should never be deployed together with the application but rather be installed on the target system.
+          </action>
+      </release>
+      <release version="02.00.02" date="2009-02-16" description="First release with submodules since moving to new build environment">
+          <action dev="kaiserw" type="update">
+          Updated commons-configuration dependency to version 1.6
+          </action>
+          <action dev="kaiserw" type="fix">
+          Changed dependency for JUnit to scope "provided" so it is available during JavaDoc generation
+          </action>
+          <action dev="hermannm" type="fix">
+          Enable build of sub modules
+          </action>
+          <action dev="kaiserw" type="add">
+          Turned filtering resources into a customized build property
+          </action>
+          <action dev="springhartt" type="update">
+          Shortened site path
+          </action>
+      </release>
+   </body>
+</document>

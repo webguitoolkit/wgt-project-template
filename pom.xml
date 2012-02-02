@@ -1,0 +1,1567 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.webguitoolkit.maven</groupId>
+  <artifactId>wgt-project-template</artifactId>
+  <packaging>pom</packaging>
+  <version>01.00.00</version>
+  <name>MavenProjectTemplate</name>
+  <description>Define project defaults for Maven-based development projects in wgt</description>
+  
+  <inceptionYear>2010</inceptionYear>
+
+  <properties>
+    <prop.project.group>Commons</prop.project.group>
+    <prop.project.name>${project.name}</prop.project.name>
+    <!-- Common file locations and directories used by various plugins -->
+    <prop.project.root.dir>${basedir}</prop.project.root.dir>
+    <prop.project.target.dir>${prop.project.root.dir}/target</prop.project.target.dir>
+    <prop.project.output.subdir>classes</prop.project.output.subdir>
+    <prop.project.output.dir>${prop.project.target.dir}/${prop.project.output.subdir}</prop.project.output.dir>
+    <prop.project.output.dir.test>${prop.project.target.dir}/classes-test</prop.project.output.dir.test>
+    <prop.project.src.dir>${prop.project.root.dir}/src</prop.project.src.dir>
+    <prop.project.resource.dir>${prop.project.src.dir}/main/resources</prop.project.resource.dir>
+    <prop.project.resource.filtering>true</prop.project.resource.filtering>
+    <prop.project.webapp.subdir>webapp</prop.project.webapp.subdir>
+    <prop.project.war.src.dir>${prop.project.src.dir}/main/${prop.project.webapp.subdir}</prop.project.war.src.dir>
+    <prop.project.webapp.dir>${prop.project.target.dir}/${prop.project.webapp.subdir}</prop.project.webapp.dir>
+    <prop.project.artifact.dir>${prop.project.war.src.dir}</prop.project.artifact.dir>
+    <prop.resources.includes>**/*</prop.resources.includes>
+    <prop.resources.excludes>jrebel.xml</prop.resources.excludes>
+    <!-- Configure which Java class files should be excluded for AspectJ. By default, none are excluded. If all should be excluded set this property to **/* -->
+    <prop.aspectj.excludes />
+    <prop.aspectjrt.version>1.6.11</prop.aspectjrt.version>
+    <prop.aspectj.aspectDirectory>${project.build.sourceDirectory}</prop.aspectj.aspectDirectory>
+    <!-- avoid test aspects in test/java directory as this may confuse the Maven compiler by adding the test/java twice as source folder -->
+    <prop.aspectj.testAspectDirectory>${prop.project.src.dir}/test/aspect</prop.aspectj.testAspectDirectory>
+    <prop.aspectj.skip.compile>false</prop.aspectj.skip.compile>
+    <prop.aspectj.skip.test-compile>true</prop.aspectj.skip.test-compile>
+    <!-- properties which manage the report generation, e.g. enabling/disabling certain reports -->
+    <prop.site.outputDirectory>${project.reporting.outputDirectory}</prop.site.outputDirectory>
+    <prop.site.generateReports>true</prop.site.generateReports>
+    <prop.report.version.skip>true</prop.report.version.skip>
+    <prop.report.findbug.skip>true</prop.report.findbug.skip>
+    <prop.report.pmd.skip>false</prop.report.pmd.skip>
+    <prop.report.checkstyle.skip>false</prop.report.checkstyle.skip>
+    <prop.report.clover.skip>false</prop.report.clover.skip>
+    <prop.report.clirr.comparisonVersion>01.00.00</prop.report.clirr.comparisonVersion>
+    <prop.report.clirr.skip>true</prop.report.clirr.skip>
+    <prop.report.clirr.excludes>NONE</prop.report.clirr.excludes>
+    <prop.report.changes.toAddress>btd-build-info@infoserve.endress.com</prop.report.changes.toAddress>
+    <prop.report.changes.aggregate>true</prop.report.changes.aggregate>
+    <prop.report.changes.runOnlyAtExecutionRoot>true</prop.report.changes.runOnlyAtExecutionRoot>
+    <prop.report.mailSender>maven@localhost</prop.report.mailSender>
+    <prop.sonar.version>2.11</prop.sonar.version>
+    <!-- Sonar runtime config parameter: http://docs.codehaus.org/display/SONAR/Advanced+parameters -->
+    <prop.sonar.exclusions />
+    <prop.sonar.skipDesign>false</prop.sonar.skipDesign>
+    <prop.skippedModules />
+    <prop.sonar.profile />
+    <prop.sonar.phase />
+    <prop.smtpHost>195.183.95.175</prop.smtpHost>
+    <prop.smtpPort>25</prop.smtpPort>
+    <prop.javadoc.skip>true</prop.javadoc.skip>
+    <!-- If set to true a jar file with the generated Javadoc is stored together with the artifact in the repository -->
+    <prop.javadoc.attach-javadocs>false</prop.javadoc.attach-javadocs>
+    <prop.source.generateSourceJar>false</prop.source.generateSourceJar>
+    <!-- If set to true a jar file with the test classes is stored together with the artifact in the repository -->
+    <prop.jar.skipTestjar>true</prop.jar.skipTestjar>
+    <!-- Switches running tests during the Maven build on and off -->
+    <prop.test.skip>true</prop.test.skip>
+    <!-- Defines whether the JUnit test should run in the same VM as Maven. Used mostly for debugging purposes. -->
+    <!-- Important: if JUnit runs in the same VM as Maven then Cobertura only flushes the cobertura.ser during VM shutdown. --> 
+    <!-- This leads to incorrect Cobertura results (test coverage is always 0%) -->
+    <prop.test.forkMode>once</prop.test.forkMode>
+    <!-- Defines whether the Maven build process should stop or continue after tests have failed -->
+    <prop.test.testFailureIgnore>false</prop.test.testFailureIgnore>
+    <!-- Defines the Java compiler -->
+    <prop.java.compiler>javac</prop.java.compiler>
+    <prop.compile.verbose>true</prop.compile.verbose>
+    <prop.compile.exclude>none</prop.compile.exclude>
+    <prop.compile.exclude.test>none</prop.compile.exclude.test>
+    <prop.compile.include>**/*</prop.compile.include>
+    <prop.compile.include.test>**/*</prop.compile.include.test>
+    <prop.compile.compilerPluginVersion>1.8.4</prop.compile.compilerPluginVersion>
+    <!-- Defines which Java version is used in the source files for writing Java code -->
+    <prop.java.sourceversion>1.5</prop.java.sourceversion>
+    <!-- Defines which Java version the compiled class files are compatible with -->
+    <prop.java.targetversion>1.5</prop.java.targetversion>
+    <!-- Configure the generating of a WAR artifact -->
+    <prop.war.sourceExcludes>/WEB-INF/classes/**</prop.war.sourceExcludes>
+    <prop.war.packagingExcludes>NONE</prop.war.packagingExcludes>
+    <prop.war.webxml>${prop.project.war.src.dir}/WEB-INF/web.xml</prop.war.webxml>
+    <prop.war.jspc.webxml />
+    <prop.war.jspc.precompile>true</prop.war.jspc.precompile>
+    <prop.war.jspc.verbose>true</prop.war.jspc.verbose>
+    <prop.war.jspc.showsuccess>true</prop.war.jspc.showsuccess>
+    <prop.war.jspc.validatexml>false</prop.war.jspc.validatexml>
+    <prop.war.resource.filtering>false</prop.war.resource.filtering>
+    <!-- Configure the generating of an EAR artifact -->
+    <prop.ear.output.dir>${prop.project.target.dir}/classes-webapp</prop.ear.output.dir>
+    <prop.ear.webModule.context />
+    <prop.ear.webModule.groupId>${project.groupId}</prop.ear.webModule.groupId>
+    <prop.ear.webModule.artifactId />
+    <prop.ear.webModule.version />
+    <prop.ear.webModule.type>war</prop.ear.webModule.type>
+    <prop.ear.source.dir>${basedir}/artefacts</prop.ear.source.dir>
+    <prop.ear.source.excludes>**/SAP_MANIFEST.MF,**/MANIFEST.MF</prop.ear.source.excludes>
+    <prop.ear.displayName>${project.artifactId}-${prop.project.version.interface}</prop.ear.displayName>
+    <prop.ear.description>OVERWRITE</prop.ear.description>
+    <prop.ear.generateApplicationXml>true</prop.ear.generateApplicationXml>
+    <prop.ear.contextRoot>/${prop.ear.webModule.context}-${prop.project.version.interface}</prop.ear.contextRoot>
+    <prop.ear.meta-inf.dir>${prop.project.target.dir}/META-INF-EAR</prop.ear.meta-inf.dir>
+ 
+    <!-- Defines that sub modules should obtain the same version as the parent POM during Maven release -->
+    <prop.release.autoVersionSubmodules>true</prop.release.autoVersionSubmodules>
+    <prop.release.tagBase>http://isw600.infoserve.endress.com/svn/${prop.project.group}/${prop.project.name}/tags</prop.release.tagBase>
+    <prop.deploy.skip>false</prop.deploy.skip>
+ 
+    <!-- If set to true then Maven mvn clean command has no effect (useful for sub-modules) -->
+    <prop.clean.skip>false</prop.clean.skip>
+    <prop.hibernate3.hibernatetool.implementation>configuration</prop.hibernate3.hibernatetool.implementation>
+    <prop.hibernate3.hbm2ddl.configfile>${prop.project.src.dir}/test/resources/hibernate.cfg.xml</prop.hibernate3.hbm2ddl.configfile>
+ 
+    <!-- executes schema changes against the database - use with care! default=false -->
+    <prop.hibernate3.hbm2ddl.export>false</prop.hibernate3.hbm2ddl.export>
+    <prop.hibernate3.hbm2ddl.drop>false</prop.hibernate3.hbm2ddl.drop>
+    <prop.hibernate3.hbm2ddl.update>false</prop.hibernate3.hbm2ddl.update>
+    <prop.hibernate3.hbm2ddl.create>true</prop.hibernate3.hbm2ddl.create>
+    <prop.hibernate3.hbm2ddl.format>true</prop.hibernate3.hbm2ddl.format>
+    <prop.hibernate3.hbm2ddl.haltonerror>false</prop.hibernate3.hbm2ddl.haltonerror>
+    <prop.hibernate3.hbm2ddl.schemafile>dbschema.sql</prop.hibernate3.hbm2ddl.schemafile>
+    <prop.hibernate3.hbm2ddl.scanclasses>true</prop.hibernate3.hbm2ddl.scanclasses>
+    <prop.cobertura.version>1.9.4.1</prop.cobertura.version>
+    <prop.cobertura.exclude>com/endress/infoserve/**/*Test.class</prop.cobertura.exclude>
+    <!-- Context name of the web application (if the project is one) which the Tomcat deployer uses to deploy the application during the Maven build process -->
+    <prop.web.context>/${prop.project.name}</prop.web.context>
+    <prop.tomcat.url>http://localhost:8080</prop.tomcat.url>
+    <tomcat.contextroot>/${project.artifactId}</tomcat.contextroot>
+    <!-- use Java paths with duplicate backslashes so we can use this property for some plugins which expect Java file parameters -->
+    <prop.cobertura.log.path-unc>\\isw600\cobertura-logs</prop.cobertura.log.path-unc>
+    <prop.pdf.output.dir>${prop.project.target.dir}</prop.pdf.output.dir>
+    <prop.pdf.site.dir>${prop.project.src.dir}/site</prop.pdf.site.dir>
+    <prop.pdf.aggregate>true</prop.pdf.aggregate>
+    <!-- Specifies which browser should be used for running tests in Selenium -->
+    <prop.browser>firefox</prop.browser>
+    <!-- Specifies the path to the browser executable for Selenium tests -->
+    <prop.browserExe>D:\Apps\Mozilla Firefox\firefox.exe</prop.browserExe>
+    <!-- Syntax for version info in Manifest file -->
+    <prop.project.version.sprintinfo />
+    <prop.manifest.specification>${project.artifactId}-${project.version}${prop.project.version.sprintinfo}</prop.manifest.specification>
+    <prop.manifest.implementation>${project.artifactId}-${project.version}-r${buildNumber}</prop.manifest.implementation>
+  </properties>
+  
+  <developers>
+    <developer>
+      <id>kaiserw</id>
+      <name>Wolfram Kaiser</name>
+      <email>wolfram.kaiser@infoserve.endress.com</email>
+    </developer>
+     <developer>
+      <id>zaretzkep</id>
+      <name>Peter Zaretzke</name>
+      <email>peter@17sprints.de</email>
+    </developer>
+  </developers>
+  
+  <organization>
+    <name>Endress+Hauser Infoserve</name>
+    <url>http://www.infoserve.endress.com</url>
+  </organization>
+  
+  <issueManagement>
+     <system>github</system>
+    <url>https://github.com/17sprints/wgt-project-template/issues</url>
+  </issueManagement>
+ 
+  <ciManagement>
+    <system>Continuum</system>
+    <url>http://isw600.infoserve.endress.com:8080/continuum</url>
+  </ciManagement>
+
+  <scm>
+    <connection>git:git@github.com:17sprints/wgt-project-template.git</connection>
+    <developerConnection>scm:svn:http://isw600.infoserve.endress.com/svn/Commons/MavenProjectTemplate/trunk/MavenProjectTemplate</developerConnection>
+    <url>http://isw600.infoserve.endress.com:8080/svnwebclient/directoryContent.jsp?url=Commons%2FMavenProjectTemplate%2Ftrunk%2FMavenProjectTemplate</url>
+  </scm>
+ 
+  <modules>
+    <module>build/pom/dependencies</module>
+    <module>build/pom/process</module>
+  </modules>
+
+  <repositories>
+    <repository>
+      <id>internal</id>
+      <name>Internal Archiva repository</name>
+      <url>http://isw600.infoserve.endress.com:9092/nexus/content/repositories/company-repository</url>
+    </repository>
+  </repositories>
+  
+<!--
+  <pluginRepositories>
+    <pluginRepository>
+      <id>Codehaus Snapshots</id>
+      <url>http://snapshots.repository.codehaus.org/</url>
+    </pluginRepository>
+  </pluginRepositories>
+ -->
+ 
+   <dependencies>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+      
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1.1</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4.1</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.activation</groupId>
+          <artifactId>activation</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>javax.management</groupId>
+      <artifactId>jmxri</artifactId>
+      <version>1.2.1</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    
+    <!-- Prevent Geronimo libraries from shadowing standard javax.XYZ components -->
+    <dependency>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-javamail_1.4_spec</artifactId>
+      <version>1.7.1</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-activation_1.1_spec</artifactId>
+      <version>1.1</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>geronimo-servlet_2.5_spec</artifactId>
+      <version>1.2</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+
+  </dependencies>
+    
+  <build>
+	<directory>${prop.project.target.dir}</directory>
+    <sourceDirectory>${prop.project.src.dir}/main/java</sourceDirectory>
+    <testSourceDirectory>${prop.project.src.dir}/test/java</testSourceDirectory>
+	<testOutputDirectory>${prop.project.output.dir.test}</testOutputDirectory>
+    <outputDirectory>${prop.project.output.dir}</outputDirectory>
+	 	
+    <resources>
+      <resource>
+        <directory>${prop.project.resource.dir}</directory>
+        <filtering>${prop.project.resource.filtering}</filtering>
+        <includes>
+          <include>${prop.resources.includes}</include>
+        </includes>
+        <excludes>
+		  <exclude>${prop.resources.excludes}</exclude>
+		</excludes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>${prop.project.src.dir}/test/resources</directory>
+      </testResource>
+    </testResources>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.3.2</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>jar</goal>
+                <goal>test-jar</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <archive>
+              <index>true</index>
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                <addClasspath>true</addClasspath>
+              </manifest>
+              <manifestEntries>
+                <Implementation-Build>${prop.manifest.implementation}</Implementation-Build>
+                <Specification-Build>${prop.manifest.specification}</Specification-Build>
+              </manifestEntries>
+            </archive>
+            <skip>${prop.jar.skipTestjar}</skip>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.1.1</version>
+          <configuration>
+            <outputDirectory>${prop.project.target.dir}</outputDirectory>
+            <warSourceDirectory>${prop.project.war.src.dir}</warSourceDirectory>
+            <webappDirectory>${prop.project.webapp.dir}</webappDirectory>
+
+            <warSourceExcludes>${prop.war.sourceExcludes}</warSourceExcludes>
+            <packagingExcludes>${prop.war.packagingExcludes}</packagingExcludes>
+            <webXml>${prop.war.webxml}</webXml>
+
+            <webResources>
+              <resource>
+                <directory>${prop.project.artifact.dir}</directory>
+                <filtering>${prop.war.resource.filtering}</filtering>
+              </resource>
+            </webResources>
+
+            <archive>
+              <addMavenDescriptor>false</addMavenDescriptor>
+              <manifest>
+                <addClasspath>true</addClasspath>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              </manifest>
+              <manifestEntries>
+                <Implementation-Build>${prop.manifest.implementation}</Implementation-Build>
+                <Specification-Build>${prop.manifest.specification}</Specification-Build>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-ear-plugin</artifactId>
+          <version>2.7</version>
+          <configuration>
+            <displayName>${prop.ear.displayName}</displayName>
+            <outputDirectory>${prop.project.target.dir}</outputDirectory>
+            <workDirectory>${prop.ear.output.dir}</workDirectory>
+            <description>${prop.ear.description}</description>
+            <generateApplicationXml>${prop.ear.generateApplicationXml}</generateApplicationXml>
+            <generatedDescriptorLocation>${prop.ear.meta-inf.dir}</generatedDescriptorLocation>
+            <applicationXml>${prop.ear.meta-inf.dir}/application.xml</applicationXml>
+            <modules>
+              <webModule>
+                <groupId>${prop.ear.webModule.groupId}</groupId>
+                <artifactId>${prop.ear.webModule.artifactId}</artifactId>
+                <contextRoot>${prop.ear.webModule.contextRoot}</contextRoot>
+              </webModule>
+              <jarModule>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <excluded>true</excluded>
+              </jarModule>
+              <jarModule>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <excluded>true</excluded>
+              </jarModule>
+
+            </modules>
+
+            <earSourceDirectory>${prop.ear.source.dir}</earSourceDirectory>
+            <earSourceExcludes>${prop.ear.source.excludes}</earSourceExcludes>
+            <manifestFile>${prop.ear.output.dir}/META-INF/MANIFEST.MF</manifestFile>
+					
+            <archive>
+              <addMavenDescriptor>false</addMavenDescriptor>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>hibernate3-maven-plugin</artifactId>
+          <version>2.2</version>
+          <executions>
+            <execution>
+              <id>create-hibernate-schema</id>
+              <phase>package</phase>
+              <goals>
+                <goal>hbm2ddl</goal>
+              </goals>
+              <configuration>
+                <components>
+                  <component>
+                    <name>hbm2ddl</name>
+                    <implementation>${prop.hibernate3.hibernatetool.implementation}</implementation>
+                  </component>
+                </components>
+                <componentProperties>
+                  <configurationfile>${prop.hibernate3.configfile}</configurationfile>
+                  <export>${prop.hibernate3.hbm2ddl.export}</export>
+                  <update>${prop.hibernate3.hbm2ddl.update}</update>
+                  <create>${prop.hibernate3.hbm2ddl.create}</create>
+                  <drop>${prop.hibernate3.hbm2ddl.drop}</drop>
+                  <format>${prop.hibernate3.hbm2ddl.format}</format>
+                  <haltonerror>${prop.hibernate3.hbm2ddl.haltonerror}</haltonerror>
+                  <outputfilename>${prop.hibernate3.hbm2ddl.schemafile}</outputfilename>
+                  <scan-classes>${prop.hibernate3.hbm2ddl.scanclasses}</scan-classes>
+                </componentProperties>
+              </configuration>
+            </execution>
+
+          </executions>
+          <dependencies>
+            <dependency>
+              <groupId>org.hibernate</groupId>
+              <artifactId>hibernate-core</artifactId>
+              <version>3.6.1.Final</version>
+            </dependency>
+            <dependency>
+              <groupId>org.hibernate</groupId>
+              <artifactId>hibernate-annotations</artifactId>
+              <version>3.4.0.GA</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>javax.persistence</groupId>
+                  <artifactId>ejb</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pdf-plugin</artifactId>
+          <version>1.1</version>
+          <executions>
+            <execution>
+              <id>pdf</id>
+              <phase>site</phase>
+              <goals>
+                <goal>pdf</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${prop.project.target.dir}/docs</outputDirectory>
+                <siteDirectory>${prop.pdf.site.dir}</siteDirectory>
+                <aggregate>${prop.pdf.aggregate}</aggregate>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.sonar</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${prop.sonar.version}</version>
+          <executions>
+            <execution>
+              <id>sonar-report</id>
+              <phase>site</phase>
+              <goals>
+                <goal>sonar</goal>
+              </goals>
+            </execution>
+          </executions>
+
+        </plugin>
+        
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>cobertura-maven-plugin</artifactId>
+          <version>2.5.1</version>
+          <configuration>
+            <!-- exclude AspectJ classes as they cause problems with Cobertura instrumentation (as of AspectJ 1.6.11 and Cobertura 1.9.4) -->
+            <instrumentation>
+              <excludes>
+                <exclude>**/aspect*/*.class</exclude>
+                <exclude>${prop.cobertura.exclude}</exclude>
+              </excludes>
+            </instrumentation>
+            <formats>
+              <format>html</format>
+              <format>xml</format>
+            </formats>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>net.sourceforge.cobertura</groupId>
+              <artifactId>cobertura</artifactId>
+              <version>${prop.cobertura.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-changes-plugin</artifactId>
+          <version>2.6</version>
+          <configuration>
+            <url>http://isw600.infoserve.endress.com/projectsites/${prop.project.group}/${project.artifactId}/</url>
+            <urlDownload>http://isw600.infoserve.endress.com:8080/archiva/browse/${project.groupId}/${project.artifactId}</urlDownload>
+            <issueLinkTemplate>${project.issueManagement.url}/show/%ISSUE%</issueLinkTemplate>      
+            <smtpHost>${prop.smtpHost}</smtpHost>
+            <smtpPort implementation="java.lang.Integer">${prop.smtpPort}</smtpPort>
+            <mailSender>
+              <name>Release Announcement</name>
+              <email>${prop.report.mailSender}</email>
+            </mailSender>
+            <toAddresses>
+              <toAddress implementation="java.lang.String">${prop.report.changes.toAddress}</toAddress>
+            </toAddresses>
+            <!-- Perhaps this helps in better dealing with multi-module projects -->
+            <aggregate>${prop.report.changes.aggregate}</aggregate>
+            <runOnlyAtExecutionRoot>${prop.report.changes.runOnlyAtExecutionRoot}</runOnlyAtExecutionRoot>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[1.0.0,)</versionRange>
+                    <goals>
+                      <goal>tree</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <versionRange>[1.0.0,)</versionRange>
+                    <goals>
+                      <goal>active-profiles</goal>
+                      <goal>effective-pom</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>aspectj-maven-plugin</artifactId>
+                    <versionRange>[1.0.0,)</versionRange>
+                    <goals>
+                      <goal>compile</goal>
+                      <goal>test-compile</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>yuicompressor-maven-plugin</artifactId>
+                    <versionRange>[0.0,)</versionRange>
+                    <goals>
+                      <goal>compress</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+        
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>1.2</version>
+          <configuration>
+            <allowSnapshots>false</allowSnapshots>
+            <parentVersion>[02.00.00,1.0.0)</parentVersion>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    
+	<plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+            <compilerId>${prop.java.compiler}</compilerId>
+            <source>${prop.java.sourceversion}</source>
+            <target>${prop.java.targetversion}</target>
+            <verbose>${prop.compile.verbose}</verbose>
+            <includes>
+              <include>${prop.compile.include}</include>
+            </includes>
+            <excludes>
+              <exclude>${prop.compile.exclude}</exclude>
+            </excludes>
+            <testExcludes>
+              <exclude>${prop.compile.exclude.test}</exclude>
+            </testExcludes>
+            <testIncludes>
+              <include>${prop.compile.include.test}</include>
+            </testIncludes>
+         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-compiler-javac</artifactId>
+            <version>${prop.compile.compilerPluginVersion}</version>
+          </dependency>
+          <!-- pre-configured dependency so sub-projects can easily use the eclipse compiler
+               by setting compilerId to "eclipse" 
+          -->
+          <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-compiler-eclipse</artifactId>
+            <version>${prop.compile.compilerPluginVersion}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-compiler-jikes</artifactId>
+            <version>${prop.compile.compilerPluginVersion}</version>
+          </dependency>
+        </dependencies>
+       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>aspectj-maven-plugin</artifactId>
+        <version>1.4</version>
+        <configuration>
+          <source>${prop.java.sourceversion}</source>
+          <target>${prop.java.targetversion}</target>
+          <complianceLevel>${prop.java.targetversion}</complianceLevel>
+          <showWeaveInfo>true</showWeaveInfo>
+          <verbose>true</verbose>
+          <referenceInfo>true</referenceInfo>
+          <excludes>
+            <exclude>${prop.aspectj.excludes}</exclude>
+          </excludes>
+          <aspectDirectory>${prop.aspectj.aspectDirecty}</aspectDirectory>
+          <testAspectDirectory>${prop.aspectj.testAspectDirectory}</testAspectDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>aspectj-compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <argumentFileName>builddef-${project.artifactId}.lst</argumentFileName>
+              <skip>${prop.aspectj.skip.compile}</skip>
+            </configuration>
+          </execution>
+          <execution>
+            <id>aspectj-test-compile</id>
+            <goals>
+              <goal>test-compile</goal>
+            </goals>
+            <configuration>
+              <argumentFileName>builddef_test-${project.artifactId}.lst</argumentFileName>
+              <skip>${prop.aspectj.skip.test-compile}</skip>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>${prop.aspectjrt.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.11</version>
+        <configuration>
+          <classesDirectory>${prop.project.output.dir}</classesDirectory>
+          <skip>${prop.test.skip}</skip>
+          <source>${prop.jdk.sourceversion}</source>
+          <testFailureIgnore>${prop.test.testFailureIgnore}</testFailureIgnore>
+          <target>${prop.jdk.targetversion}</target>
+          <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
+          <forkMode>${prop.test.forkMode}</forkMode>
+
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <reportFormat>plain</reportFormat>
+          <workingDirectory>${prop.project.root.dir}</workingDirectory>
+          <trimStackTrace>false</trimStackTrace>
+          <!-- JUnit 4 considers classes starting with "Test" as test classes - we use this prefix often for test utility classes -->
+          <!-- so this improves the compatibility with JUnit 3 test projects. -->
+          <excludes>
+            <exclude>**/Test*</exclude>
+            <exclude>**/*TestCase</exclude>
+          </excludes>
+          
+			<!-- Durchschleifen der gesetzten System-Properties in die Test-Umgebung -->
+		  <systemPropertyVariables>
+		    <catalina.home>${env.CATALINA_HOME}</catalina.home>
+		    <TCLOGDIR>${TCLOGDIR}</TCLOGDIR>
+		  </systemPropertyVariables>
+        </configuration>
+      </plugin>      
+      
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <attach>${prop.javadoc.attach-javadocs}</attach>
+          <skip>${prop.javadoc.skip}</skip>
+<!--
+          <aggregate>true</aggregate>
+ -->
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+              <!--
+              <goal>test-jar</goal>
+               -->
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <outputDirectory>${prop.project.target.dir}/sources</outputDirectory>
+          <attach>${prop.source.generateSourceJar}</attach>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <id>build-scm</id>
+            <!--
+             move buildnumber generation to later phase so it is not always executed. Phase 'package' 
+             would be too late because the plugin would be executed after the package file has been created.
+             Currently (1-beta-2), there is no property to access the SCM build number. This property would
+             be necessary to combine the SCM build number and a formated timestamp. Thus, we define our own
+             property.
+            -->   
+            <phase>test</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+            <configuration>
+              <doCheck>false</doCheck>
+              <doUpdate>false</doUpdate>
+              <revisionOnScmFailure>unversioned</revisionOnScmFailure>
+              <useLastCommittedRevision>true</useLastCommittedRevision>
+              <buildNumberPropertyName>prop.scm.buildNumber</buildNumberPropertyName>
+              <scmDirectory>${prop.project.root.dir}</scmDirectory>
+              <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+              <revisionOnScmFailure>scm:svn:http://isw600.infoserve.endress.com/svn/</revisionOnScmFailure>
+            </configuration>
+          </execution>
+          <execution>
+            <id>build-timestamp</id>
+            <!-- 
+             move buildnumber generation to later phase so it is not always executed. Phase 'package' 
+             would be too late because the plugin would be executed after the package file has been created.
+            -->  
+            <phase>test</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+            <configuration>
+              <format>{0}/{1,date,yyyy-MM-dd_HH:mm:ss}</format>
+              <items>
+                <item>${prop.scm.buildNumber}</item>
+                <item>timestamp</item>
+              </items>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <outputDirectory>${prop.site.outputDirectory}</outputDirectory>
+          <generateReports>${prop.site.generateReports}</generateReports>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tomcat-maven-plugin</artifactId>
+        <version>1.1</version>
+        <configuration>
+          <url>${prop.tomcat.url}/manager</url>
+          <server>tomcat-server</server>
+          <path>${prop.web.context}</path>
+          <update>true</update>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.2.2</version>
+        <configuration>
+          <tagBase>${prop.release.tagBase}</tagBase>
+          <autoVersionSubmodules>${prop.release.autoVersionSubmodules}</autoVersionSubmodules>
+          <preparationGoals>clean versions:use-releases test-compile aspectj:compile aspectj:test-compile verify install -Dmaven.clean.failOnError=false</preparationGoals>
+          <!-- attempt to prevent error with release-plugin and subversion > 1.5 and http protocol -->
+          <remoteTagging>true</remoteTagging>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>tree</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>tree</goal>
+            </goals>
+            <configuration>
+              <outputFile>${prop.project.target.dir}/mvn-info/dependency-tree-${project.artifactId}-${project.version}.txt</outputFile>
+              <verbose>true</verbose>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-help-plugin</artifactId>
+        <version>2.1.1</version>
+        <executions>
+          <execution>
+            <id>mvn-help-effectivepom</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>effective-pom</goal>
+            </goals>
+            <configuration>
+              <output>${prop.project.target.dir}/mvn-info/mvn-help-pom-${project.artifactId}-${project.version}.txt</output>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>mvn-help-activeprofiles</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>active-profiles</goal>
+            </goals>
+            <configuration>
+              <output>${prop.project.target.dir}/mvn-info/mvn-help-profiles-${project.artifactId}-${project.version}.txt</output>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.3.1</version>
+        <executions>
+          <execution>
+            <id>install-main</id>
+            <phase>install</phase>
+            <goals>
+              <goal>install</goal>
+            </goals>
+
+          </execution>
+          <!-- execute plugin for a second time to copy a SNAPSHOT path with version information -->
+
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+          <execution>
+            <id>deploy-main</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+          </execution>
+          <!-- execute plugin for a second time to copy a SNAPSHOT path with version information -->
+          <execution>
+            <id>deploy-snapshot</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy-file</goal>
+            </goals>
+            <configuration>
+              <file>${project.file}</file>
+              <pomFile>${basedir}/pom.xml</pomFile>
+              <version>SNAPSHOT</version>
+              <uniqueVersion>false</uniqueVersion>
+              <url>file://\\isw600.infoserve.endress.com\mvn-repository\snapshots</url>
+            </configuration>
+           </execution>
+        </executions>
+        <configuration>
+          <deploy>${prop.deploy.skip}</deploy>
+        </configuration>
+      </plugin>
+        
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <nonFilteredFileExtensions>
+            <nonFilteredFileExtension>keystore</nonFilteredFileExtension>
+            <nonFilteredFileExtension>store</nonFilteredFileExtension>
+            <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+            <nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+            <nonFilteredFileExtension>jpeg</nonFilteredFileExtension>
+            <nonFilteredFileExtension>png</nonFilteredFileExtension>
+          </nonFilteredFileExtensions>
+        </configuration>        
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+      </plugin> 
+      
+      <!-- make clean optional/configurable so projects with several submodules can choose to perform
+           only one clean operation for all submodules -->
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+          <skip>${prop.clean.skip}</skip>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>dashboard-maven-plugin</artifactId>
+        <version>1.0.0-beta-1</version>
+        <dependencies>
+          <!-- to override commons-logging in Hibernate library dependency -->
+          <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav-jackrabbit</artifactId>
+        <version>2.2</version>
+      </extension>
+    </extensions>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>1.2</version>
+        <configuration>
+          <skip>${prop.report.version.skip}</skip>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>plugin-updates-report </report>
+              <report>dependency-updates-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+        
+  <distributionManagement>
+    <repository>
+      <id>archiva.internal</id>
+      <name>Local Archiva repository</name>
+      <url>dav:http://isw600.infoserve.endress.com:8080/archiva/repository/internal</url>
+    </repository>
+    <snapshotRepository>
+      <id>archiva.internal.snapshots</id>
+      <name>Local Archiva repository for snapshots</name>
+      <url>dav:http://isw600.infoserve.endress.com:8080/archiva/repository/snapshots</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  	<site>
+  		<id>tomcat-isw600</id>
+  		<name>site</name>
+  		<url>file://D:/Apps/xampp/htdocs/projectsites/${prop.project.group}</url>
+  	</site>
+  </distributionManagement>
+  
+  <profiles>
+    <!-- CodeCoverage for deployed web applications -->
+    <profile>
+      <id>web-testcoverage</id>
+      <dependencies>
+        <!-- required at runtime in the server with the instrumented webapp -->
+        <dependency>
+          <groupId>net.sourceforge.cobertura</groupId>
+          <artifactId>cobertura</artifactId>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>2.4.1</version>
+            <configuration>
+              <filesets>
+                <fileset>
+                  <directory>${prop.cobertura.log.path-unc}</directory>
+                  <includes>
+                    <include>cobertura-${project.name}.ser</include>
+                  </includes>
+                </fileset>
+                <fileset>
+                  <directory>${prop.cobertura.log.path-unc}\\html\\${project.name}</directory>
+                </fileset>
+              </filesets>
+            </configuration>
+          </plugin>
+          <!-- both configurations in <build> and <reporting> seem to be necessary to avoid problems with Cobertura and AspectJ -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.5.1</version>
+            <configuration>
+              <dataFile>${prop.cobertura.log.path-unc}\cobertura-${project.name}.ser</dataFile>
+              <instrumentation>
+                <excludes>
+                  <!-- exclude AspectJ classes as they cause problems with Cobertura instrumentation (as of AspectJ 1.6.10 Cobertura 1.9.4) -->
+                  <exclude>**/aspect*/*.class</exclude>
+                  <exclude>${prop.cobertura.exclude}</exclude>
+                </excludes>
+              </instrumentation>
+            </configuration>
+            <executions>
+              <execution>
+                <id>cobertura-instrument</id>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>instrument</goal>
+                </goals>
+              </execution>
+            </executions>
+            <dependencies>
+              <dependency>
+                <groupId>net.sourceforge.cobertura</groupId>
+                <artifactId>cobertura</artifactId>
+                <version>${prop.cobertura.version}</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <executions>
+              <execution>
+                <id>create-cobertura-report</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <mainClass>net.sourceforge.cobertura.reporting.Main</mainClass>
+              <includePluginDependencies>true</includePluginDependencies>
+              <arguments>
+                <argument>--datafile</argument>
+                <argument>${prop.cobertura.log.path-unc}\cobertura-${project.name}.ser</argument>
+                <argument>--destination</argument>
+                <argument>${prop.cobertura.log.path-unc}\html\${project.name}</argument>
+                <argument>${project.build.sourceDirectory}</argument>
+              </arguments>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>net.sourceforge.cobertura</groupId>
+                <artifactId>cobertura</artifactId>
+                <version>${prop.cobertura.version}</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+      <reporting>
+        <plugins>
+          <!-- both configurations in <build> and <reporting> seem to be necessary to avoid problems with Cobertura and AspectJ -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.5.1</version>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
+    <!-- Selenium test cases for web applications with deployment in Tomcat during built -->
+    <profile>
+      <id>web-integration-test</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>tomcat-maven-plugin</artifactId>
+            <version>1.1</version>
+            <executions>
+              <execution>
+                <id>start-application</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>deploy-only</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop-application</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                  <goal>undeploy</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>selenium-maven-plugin</artifactId>
+            <version>2.1</version>
+            <executions>
+              <execution>
+                <id>start-selenium-server</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start-server</goal>
+                </goals>
+                <configuration>
+                  <background>true</background>
+                </configuration>
+              </execution>
+              <execution>
+                <id>stop-selenium-server</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop-server</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.11</version>
+            <configuration>
+              <!-- Skip the normal tests, we'll run them in the integration-test phase -->
+              <skip>true</skip>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <classesDirectory>${prop.project.output.dir}</classesDirectory>
+                  <skip>false</skip>
+                  <systemPropertyVariables>
+                    <prop.browser>${prop.browser}</prop.browser>
+                    <prop.browserExe>${prop.browserExe}</prop.browserExe>
+                    <prop.tomcat.url>${prop.tomcat.url}</prop.tomcat.url>
+                    <prop.project.name>${project.name}</prop.project.name>
+                    <prop.cobertura.log.path-unc>${prop.cobertura.log.path-unc}</prop.cobertura.log.path-unc>
+                  </systemPropertyVariables>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>pdf-report</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pdf-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>      
+    </profile>
+    
+    <!-- This profile should help with some problems encountered during multi-module build.
+         In these projects the SCM SVN tags are often wrong for the SCM changelog reports so we skip creating reports altogether.
+         Furthermore, announcement mails could not be sent because POMs should not inherit these eMail addresses as their default.
+         In summary, this profile has been especially tailored to the MavenProjectTemplate itself. -->
+    <profile>
+      <id>bare-aggregator-build</id>
+      <properties>
+        <prop.site.generateReports>true</prop.site.generateReports>
+        <prop.report.version.skip>false</prop.report.version.skip>
+        <!-- missing Java/class files causes problems -->
+        <prop.report.findbug.skip>true</prop.report.findbug.skip>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.0</version>
+            <configuration>
+              <generateReports>false</generateReports>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changes-plugin</artifactId>
+            <version>2.6</version>
+            <configuration>
+              <aggregate>${prop.report.changes.aggregate}</aggregate>
+              <runOnlyAtExecutionRoot>${prop.report.changes.runOnlyAtExecutionRoot}</runOnlyAtExecutionRoot>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>      
+    </profile>
+    
+    <!-- Standard project reports: info-reports, cobertura test coverage, JUnit tests with surefire, changelog (SVN changes), taglist (SVN tags), changes from the changes.xml -->
+    <profile>
+      <id>reports-basic</id>
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+              <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+              <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+            </configuration>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>index</report>
+                  <report>project-team</report>
+                  <report>issue-tracking</report>
+                  <report>scm</report>
+                  <report>dependencies</report>
+                  <report>cim</report>
+                  <report>summary</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.11</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>report-only</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <!-- both configurations in <build> and <reporting> seem to be necessary to avoid problems with Cobertura and AspectJ -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.5.1</version>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changelog-plugin</artifactId>
+            <version>2.2</version>
+            <reportSets>
+              <reportSet>
+                <id>dual-report</id>
+                <configuration>
+                  <type>range</type>
+                  <range>180</range>
+                  <displayFileDetailUrl>http://isw600.infoserve.endress.com/svn/%FILE%</displayFileDetailUrl>
+                </configuration>
+                <reports>
+                  <report>dev-activity</report>
+                  <report>file-activity</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>taglist-maven-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+              <xmlOutputDirectory>${prop.project.target.dir}</xmlOutputDirectory>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-changes-plugin</artifactId>
+            <version>2.6</version>
+            <configuration>
+              <aggregate>${prop.report.changes.aggregate}</aggregate>
+              <runOnlyAtExecutionRoot>${prop.report.changes.runOnlyAtExecutionRoot}</runOnlyAtExecutionRoot>
+            </configuration>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>changes-report</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
+    <!-- Reports for advanced projects: findbugs (static source code analysis), javancss (code metrics for Java sources), dashboard as an overview, PMD (static compiled code analysis), 
+         checkstyle (assure coding conventions), clirr (compatibility for compiled code/libraries between versions), project cross-references with JXR, Ckjm (code metrics for Java sources) -->
+    <profile>
+      <id>reports-extended</id>
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <version>2.3.3</version>
+            <configuration>
+              <skip>${prop.report.findbug.skip}</skip>
+              <xmlOutput>true</xmlOutput>
+              <effort>Max</effort>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>javancss-maven-plugin</artifactId>
+            <version>2.0</version>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>dashboard-maven-plugin</artifactId>
+            <version>1.0.0-beta-1</version>
+          </plugin>
+          <plugin>
+            <artifactId>maven-jxr-plugin</artifactId>
+            <version>2.2</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>jxr</report>
+                  <report>test-jxr</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <version>2.6</version>
+            <configuration>
+              <skip>${prop.report.pmd.skip}</skip>
+              <targetJdk>${prop.java.targetversion}</targetJdk>
+            </configuration>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>pmd</report>
+                  <report>cpd</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>2.7</version>
+            <configuration>
+              <skip>${prop.report.checkstyle.skip}</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>clirr-maven-plugin</artifactId>
+            <version>2.3</version>
+            <configuration>
+              <skip>${prop.report.clirr.skip}</skip>
+              <comparisonVersion>${prop.report.clirr.comparisonVersion}</comparisonVersion>
+              <excludes>
+                <exclude>${prop.report.clirr.excludes}</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>ckjm-maven-plugin</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-doap-plugin</artifactId>
+            <version>1.1</version>
+            <configuration>
+              <doapOptions>
+                <programmingLanguage>java</programmingLanguage>
+              </doapOptions>
+              <asfExtOptions>
+                <included>true</included>
+              </asfExtOptions>
+            </configuration>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
+    <!--  -->
+    <profile>
+      <id>reports-experimental</id>
+      <reporting>
+        <plugins>
+          <!-- the JDiff plugin requires javadoc.exe to be found in the PATH -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jdiff-maven-plugin</artifactId>
+            <configuration>
+              <svnTagBase>${prop.report.jdiff.svnTagBase}</svnTagBase>
+              <oldTag>${prop.report.jdiff.oldTag}</oldTag>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>net.sf.xradar</groupId>
+  	        <artifactId>maven-xradar-plugin</artifactId>
+            <version>1.2.2</version>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.rat</groupId>
+            <artifactId>apache-rat-plugin</artifactId>
+            <version>0.7</version>
+          </plugin>
+          <!-- 
+          Clover-Report plugin has problems with retrieving parent POM with "prop.project.version.implementation".
+          It appears as if it cannot resolve this property set in the calling/parent POM (<modules> call)
+          -->
+          <plugin>
+            <groupId>com.atlassian.maven.plugins</groupId>
+            <artifactId>maven-clover2-plugin</artifactId>
+            <version>2.3.1</version>
+            <configuration>
+              <skip>${prop.report.clover.skip}</skip>
+            </configuration>
+          </plugin>
+
+        </plugins>
+      </reporting>
+    </profile>
+    <profile>
+      <id>report-sonar</id>
+      <dependencies>
+        <dependency>
+          <groupId>net.sourceforge.cobertura</groupId>
+          <artifactId>cobertura</artifactId>
+          <version>${prop.cobertura.version}</version>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.sonar</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+      <properties>
+        <sonar.exclusions>${prop.sonar.exclusions}</sonar.exclusions>
+        <sonar.java.source>${prop.jdk.sourceversion}</sonar.java.source>
+        <sonar.java.target>${prop.jdk.targetversion}</sonar.java.target>
+        <sonar.skipDesign>${prop.sonar.skipDesign}</sonar.skipDesign>
+        <sonar.skippedModules>${sonar.skippedModules}</sonar.skippedModules>
+        <sonar.profile>${sonar.profile}</sonar.profile>
+        <sonar.phase>${sonar.profile}</sonar.phase>
+      </properties>
+    </profile>
+
+  </profiles>
+</project>

@@ -170,7 +170,7 @@
   
   <issueManagement>
      <system>github</system>
-    <url>https://github.com/17sprints/wgt-project-template/issues</url>
+    <url>https://github.com/webguitoolkit/wgt-project-template/issues</url>
   </issueManagement>
  
   <ciManagement>
@@ -179,9 +179,9 @@
   </ciManagement>
 
   <scm>
-    <connection>git:git@github.com:17sprints/wgt-project-template.git</connection>
-    <developerConnection>scm:svn:http://isw600.infoserve.endress.com/svn/Commons/MavenProjectTemplate/trunk/MavenProjectTemplate</developerConnection>
-    <url>http://isw600.infoserve.endress.com:8080/svnwebclient/directoryContent.jsp?url=Commons%2FMavenProjectTemplate%2Ftrunk%2FMavenProjectTemplate</url>
+    <connection>git:git@github.com:webguitoolkit/wgt-project-template.git</connection>
+    <developerConnection></developerConnection>
+    <url></url>
   </scm>
  
   <modules>

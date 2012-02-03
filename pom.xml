@@ -1,8 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+ 
   <groupId>org.webguitoolkit.maven</groupId>
   <artifactId>wgt-project-template</artifactId>
   <packaging>pom</packaging>
+ 
   <version>01.00.00</version>
   <name>MavenProjectTemplate</name>
   <description>Define project defaults for Maven-based development projects in wgt</description>
@@ -179,9 +181,9 @@
   </ciManagement>
 
   <scm>
-    <connection>git:git@github.com:webguitoolkit/wgt-project-template.git</connection>
-    <developerConnection></developerConnection>
-    <url></url>
+    <connection>scm:git:git@github.com:webguitoolkit/wgt-project-template.git</connection>
+    <developerConnection>scm:git:git@github.com:webguitoolkit/wgt-project-template.git</developerConnection>
+    <url>git@github.com:webguitoolkit/wgt-project-template.git</url>
   </scm>
  
   <modules>
@@ -565,6 +567,8 @@
                     <versionRange>[1.0.0,)</versionRange>
                     <goals>
                       <goal>tree</goal>
+                      <goal>unpack</goal>
+                     <goal>copy-dependencies</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
@@ -599,6 +603,7 @@
                     <ignore />
                   </action>
                 </pluginExecution>
+                
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>net.alchim31.maven</groupId>

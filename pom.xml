@@ -6,8 +6,8 @@
   <packaging>pom</packaging>
  
   <version>01.00.00</version>
-  <name>MavenProjectTemplate</name>
-  <description>Define project defaults for Maven-based development projects in wgt</description>
+  <name>wgt-project-template</name>
+  <description>Define project defaults for Maven-based development projects in WGT</description>
   
   <inceptionYear>2010</inceptionYear>
 
@@ -170,15 +170,16 @@
     <url>http://www.infoserve.endress.com</url>
   </organization>
   
-  <issueManagement>
-     <system>github</system>
-    <url>https://github.com/webguitoolkit/wgt-project-template/issues</url>
-  </issueManagement>
  
   <ciManagement>
     <system>Continuum</system>
     <url>http://isw600.infoserve.endress.com:8080/continuum</url>
   </ciManagement>
+
+  <issueManagement>
+     <system>github</system>
+    <url>https://github.com/webguitoolkit/wgt-project-template/issues</url>
+  </issueManagement>
 
   <scm>
     <connection>scm:git:git@github.com:webguitoolkit/wgt-project-template.git</connection>
@@ -235,6 +236,7 @@
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
+    
     <dependency>
       <groupId>javax.activation</groupId>
       <artifactId>activation</artifactId>
@@ -242,6 +244,7 @@
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
+    
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>mail</artifactId>
@@ -255,6 +258,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+    
     <dependency>
       <groupId>javax.management</groupId>
       <artifactId>jmxri</artifactId>
@@ -271,6 +275,7 @@
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
+    
     <dependency>
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-activation_1.1_spec</artifactId>
@@ -278,6 +283,7 @@
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
+    
     <dependency>
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-servlet_2.5_spec</artifactId>

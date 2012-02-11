@@ -614,7 +614,7 @@
                   <pluginExecutionFilter>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>yuicompressor-maven-plugin</artifactId>
-                    <versionRange>[0.0,)</versionRange>
+                    <versionRange>[1.0,)</versionRange>
                     <goals>
                       <goal>compress</goal>
                     </goals>

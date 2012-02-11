@@ -36,7 +36,7 @@
     <!-- avoid test aspects in test/java directory as this may confuse the Maven compiler by adding the test/java twice as source folder -->
     <prop.aspectj.testAspectDirectory>${prop.project.src.dir}/test/aspect</prop.aspectj.testAspectDirectory>
     <prop.aspectj.skip.compile>false</prop.aspectj.skip.compile>
-    <prop.aspectj.skip.test-compile>true</prop.aspectj.skip.test-compile>
+    <prop.aspectj.skip.test-compile>false</prop.aspectj.skip.test-compile>
     <!-- properties which manage the report generation, e.g. enabling/disabling certain reports -->
     <prop.site.outputDirectory>${project.reporting.outputDirectory}</prop.site.outputDirectory>
     <prop.site.generateReports>true</prop.site.generateReports>

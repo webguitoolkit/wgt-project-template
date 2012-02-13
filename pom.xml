@@ -53,7 +53,7 @@
 		<prop.report.clirr.comparisonVersion>01.00.00</prop.report.clirr.comparisonVersion>
 		<prop.report.clirr.skip>true</prop.report.clirr.skip>
 		<prop.report.clirr.excludes>NONE</prop.report.clirr.excludes>
-		<!--prop.report.changes.toAddress>btd-build-info@infoserve.endress.com</prop.report.changes.toAddress-->
+		<!--prop.report.changes.toAddress>btd-build-info@infoserve.endress.com</prop.report.changes.toAddress -->
 		<prop.report.changes.aggregate>true</prop.report.changes.aggregate>
 		<prop.report.changes.runOnlyAtExecutionRoot>true</prop.report.changes.runOnlyAtExecutionRoot>
 		<prop.report.mailSender>maven@localhost</prop.report.mailSender>
@@ -64,8 +64,7 @@
 		<prop.skippedModules />
 		<prop.sonar.profile />
 		<prop.sonar.phase />
-		<!--prop.smtpHost>195.183.95.175</prop.smtpHost>
-		<prop.smtpPort>25</prop.smtpPort-->
+		<!--prop.smtpHost>195.183.95.175</prop.smtpHost> <prop.smtpPort>25</prop.smtpPort -->
 		<prop.javadoc.skip>true</prop.javadoc.skip>
 		<!-- If set to true a jar file with the generated Javadoc is stored together 
 			with the artifact in the repository -->
@@ -424,11 +423,8 @@
 			<version>4.1.2</version>
 		</dependency>
 
-		<!--dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcomponents-client</artifactId>
-			<version>4.1.2</version>
-		</dependency-->
+		<!--dependency> <groupId>org.apache.httpcomponents</groupId> <artifactId>httpcomponents-client</artifactId> 
+			<version>4.1.2</version> </dependency -->
 
 		<dependency>
 			<groupId>org.apache.derby</groupId>
@@ -451,26 +447,14 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- dependency>
-			<groupId>com.sap.sapdbc</groupId>
-			<artifactId>sapdbc</artifactId>
-			<version>7_6_00_30_5567</version>
-			<scope>provided</scope>
-		</dependency-->
+		<!-- dependency> <groupId>com.sap.sapdbc</groupId> <artifactId>sapdbc</artifactId> 
+			<version>7_6_00_30_5567</version> <scope>provided</scope> </dependency -->
 
-		<!--dependency>
-			<groupId>com.sap.jco</groupId>
-			<artifactId>sapjco</artifactId>
-			<version>2.1.8</version>
-			<scope>provided</scope>
-		</dependency-->
+		<!--dependency> <groupId>com.sap.jco</groupId> <artifactId>sapjco</artifactId> 
+			<version>2.1.8</version> <scope>provided</scope> </dependency -->
 
-		<!--dependency>
-			<groupId>com.oracle.ojdbc</groupId>
-			<artifactId>ojdbc</artifactId>
-			<version>14</version>
-			<scope>provided</scope>
-		</dependency-->
+		<!--dependency> <groupId>com.oracle.ojdbc</groupId> <artifactId>ojdbc</artifactId> 
+			<version>14</version> <scope>provided</scope> </dependency -->
 
 		<dependency>
 			<groupId>hsqldb</groupId>
@@ -514,7 +498,7 @@
 			<artifactId>jdom</artifactId>
 			<version>1.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
@@ -533,11 +517,8 @@
 			<version>2.6.2</version>
 		</dependency>
 
-		<!--dependency>
-			<groupId>javax.units</groupId>
-			<artifactId>units</artifactId>
-			<version>1.0</version>
-		</dependency-->
+		<!--dependency> <groupId>javax.units</groupId> <artifactId>units</artifactId> 
+			<version>1.0</version> </dependency -->
 
 		<dependency>
 			<groupId>javax.transaction</groupId>

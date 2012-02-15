@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>org.webguitoolkit.maven</groupId>
+		<artifactId>wgt-project-template</artifactId>
+		<version>01.00.00</version>
+		<relativePath>../../../pom.xml</relativePath>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.webguitoolkit.maven</groupId>
+	<artifactId>wgt-project-template-process</artifactId>
+	<packaging>pom</packaging>
+	<name>wgt-project-template-process</name>
+	<description>Define build process defaults for Maven-based development projects in Java</description>
+
+	<properties>
+		<prop.project.root.dir>${basedir}/../../..</prop.project.root.dir>
+	</properties>
+
+	<!-- scm> <connection>scm:svn:http://isw600.infoserve.endress.com/svn/Commons/MavenProjectTemplate/trunk/MavenProjectTemplate</connection> 
+		<developerConnection>scm:svn:http://isw600.infoserve.endress.com/svn/Commons/MavenProjectTemplate/trunk/MavenProjectTemplate</developerConnection> 
+		<url>http://isw600.infoserve.endress.com:8080/svnwebclient/directoryContent.jsp?url=Commons%2FMavenProjectTemplate%2Ftrunk%2FMavenProjectTemplate</url> 
+		</scm -->
+
+</project>
